@@ -1,0 +1,111 @@
+#!/bin/bash
+
+if [ "$EUID" -ne 0 ]; then
+  echo "where my perms at? wanna try sudo/root?"
+  exit
+fi
+
+ufw status
+echo "running..."
+sleep 3
+echo "
+_________________________________________________/
+
+||   || || !!      // | - .usmt : Create user w..
+||   || || !!     // |.. groups and perms.
+||   || || !!    // | - .aser : see users
+||   // || |!   // | - .Ab : About
+||  //  || ||  // | - .g : see groups
+||_//   || || // |__________________________
+||//    || |\\/       _   _______   __     __
+||/     || ||/   _   //   ||_____|  | \\   ||
+||\\    || |||   \\ //    ||        || \\  ||
+|| \\   || |||    \//     ||_____   ||  || ||
+||  \\  || |||    //\\    ||----|   ||  || ||
+||   || || |||   //  \\   ||        ||  || ||
+||   || ||_|||  //    \\  ||_____   ||  || ||
+||   || ||_|||_//______\\_||\____|__||   \\||
+________________________________________________
+                                                \
+"
+
+while true; do
+  read -p "Klyx>: " kly
+  if [ "$kly" = ".usmt" ]; then
+    read -p "Username: " name
+    useradd "$name"
+    echo "$name has been created!"
+    sleep 1
+    read -p "Add password to $name? (y/n): " pass
+    if [ "$pass" = "y" ]; then
+      echo "creating password..."
+      sleep 1
+      passwd "$name"
+    else
+      echo "okay."
+    fi
+    read -p "Group for user? (y/n): " group
+    if [ "$group" = "y" ]; then
+      read -p "Group name: " gn
+      sleep 1
+      groupadd "$gn"
+      echo "group $gn created!"
+      getent group | grep "$gn"
+      sleep 1
+      usermod -aG "$gn" "$name"
+      echo "Added $name to group $gn"
+      sleep 1
+      groups "$name"
+
+      mkdir "$gn"
+      echo "Created a dir for $gn"
+      sleep 1
+      ls | grep "$gn"
+      sleep 1
+      groups "$name"
+      chown :"$gn" "$gn"
+      chmod 770 "$gn"
+      getent group
+      echo "Permission is set"
+      sleep 2
+      ls -l
+      echo "$name is now in the group $gn."
+    else
+      echo "okay."
+    fi
+
+  elif [ "$kly" = ".Ab" ]; then
+    echo "hi, ako si kyle. BSIT student from San Ag and made this simple user management tool to create users with permissions more easily."
+
+  elif [ "$kly" = ".g" ]; then
+    getent passwd
+    getent group
+    groups
+    echo "users ^ "
+
+  elif [ "$kly" = ".aser" ]; then
+    getent passwd
+
+  elif [ "$kly" = "clear" ]; then
+    clear
+
+  elif [ "$kly" = "ls" ]; then
+    ls
+    ls -l
+
+  elif [ "$kly" = "man" ]; then
+    read -p "Learn what? : " learn
+    man "$learn"
+    echo "klyxen : Satisfied?"
+
+  elif [ "$kly" = ".upall" ]; then
+    apt update && apt upgrade
+
+  elif [ "$kly" = ".all" ]; then
+    echo ".upall : updates and upgrades"
+    echo ".all : shows help general"
+
+  else
+    echo "Something went wrong bruh"
+  fi
+done
