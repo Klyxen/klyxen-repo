@@ -1,21 +1,21 @@
 file_path="/usr/bin/klyxen"
 
 if [ -e "$file_path" ]; then
-  echo "File already exists!"
+  echo "Klyxen is already existing!"
 else
-  echo "Installing klyxen..."
+  echo "[ % ] : Installing klyxen..."
   sleep 2
   wget https://github.com/Klyxen/klyxen-repo/raw/main/klyxen -O klyxen
-  echo "Giving permissions..."
+  echo "[ 25% ] : Giving permissions..."
   sleep 1
   chmod +x klyxen
-  echo "Done"
-  echo "Moving..."
+  echo "[ 30% ] : Done"
+  echo "[ 31% ] : Moving..."
   sleep 2
   sudo mv klyxen /usr/bin/
-  echo "Done"
+  echo "[ 50% ] : Done"
   sleep 0.5
-  echo "Klyxen is ready."
+  echo "[ Done ] : Klyxen is ready."
   sleep 0.5
   echo "Running..."
   sudo klyxen
