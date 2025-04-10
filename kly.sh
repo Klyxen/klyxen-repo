@@ -1,4 +1,4 @@
-file_path="/usr/bin/klyxen
+file_path="/usr/bin/klyxen"
 
 if [ -e "$file_path" ]; then
   echo "File already exists!"
