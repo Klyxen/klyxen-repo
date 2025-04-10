@@ -11,5 +11,7 @@ sudo mv klyxen /usr/bin/
 echo "Done"
 sleep 0.5
 echo "Klyxen is ready."
-sleep 1
+sleep 0.5
+echo "Running..."
 sudo klyxen
+rm kl.sh
